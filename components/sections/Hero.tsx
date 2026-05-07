@@ -40,9 +40,9 @@ export default function Hero() {
       />
 
       {/* Background logo watermark */}
-      <div className="absolute -bottom-32 -right-32 w-96 h-96 pointer-events-none opacity-[0.06]">
+      <div className="absolute -bottom-32 -right-32 w-96 h-96 pointer-events-none opacity-[0.08]">
         <Image
-          src="/spartabarberlogo.jpg"
+          src="/spartabarberwbg.png"
           alt="Sparta Barber"
           width={384}
           height={384}

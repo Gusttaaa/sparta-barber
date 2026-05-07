@@ -67,14 +67,14 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 overflow-hidden ring-1 ring-white/10 group-hover:ring-[#B8B8B8]/50 transition-all duration-300">
+            <div className="w-12 h-12 overflow-hidden group-hover:opacity-80 transition-opacity duration-300">
               <Image
-                src="/spartabarberlogo.jpg"
+                src="/spartabarberwbg.png"
                 alt="Sparta Barber"
                 width={48}
                 height={48}
                 priority
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
             <span className="font-display text-sm tracking-wider hidden sm:block text-[#f5f0eb] group-hover:text-[#B8B8B8] transition-colors duration-300">

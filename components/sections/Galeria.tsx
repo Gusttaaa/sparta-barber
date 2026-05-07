@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 import { useRef } from "react";
 
 const fotos = [
@@ -27,8 +28,8 @@ export default function Galeria() {
             transition={{ duration: 0.6 }}
             className="flex items-center gap-2 mb-4"
           >
-            <div className="w-6 h-px bg-[#3aab4a]" />
-            <span className="text-xs font-medium tracking-[0.25em] uppercase text-[#3aab4a]">
+            <div className="w-6 h-px bg-[#B8B8B8]" />
+            <span className="text-xs font-medium tracking-[0.25em] uppercase text-[#B8B8B8]">
               Nosso trabalho
             </span>
           </motion.div>
@@ -42,28 +43,31 @@ export default function Galeria() {
           </motion.h2>
         </div>
 
-        {/* Masonry grid */}
-        <div className="columns-2 md:columns-3 gap-4 space-y-4">
+        {/* Gallery grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {fotos.map((foto, i) => (
             <motion.div
               key={foto.id}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{
-                duration: 0.6,
-                delay: 0.08 * i + 0.2,
+                duration: 0.5,
+                delay: 0.04 * i + 0.15,
                 ease: "easeOut" as const,
               }}
-              className="group relative break-inside-avoid overflow-hidden rounded-sm ring-1 ring-white/5 cursor-pointer"
+              className="group relative overflow-hidden rounded-sm ring-1 ring-white/5 cursor-pointer aspect-[4/5]"
             >
-              <img
-                src={`https://placehold.co/${foto.w}x${foto.h}/1e1e1e/272727?text=.`}
+              <Image
+                src={`https://placehold.co/${foto.w}x${foto.h}/1e1e1e/272727?text=.&format=png`}
                 alt={foto.alt}
-                className="w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                width={foto.w}
+                height={foto.h}
+                loading="lazy"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c0c]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute inset-0 bg-[#3aab4a]/10 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-[#B8B8B8]/10 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
                 <p className="text-xs tracking-widest uppercase text-[#f5f0eb] font-medium">
                   {foto.alt}
@@ -81,14 +85,14 @@ export default function Galeria() {
           className="mt-12 text-center"
         >
           <a
-            href="https://instagram.com/barbearia.de.primeira"
+            href="https://www.instagram.com/sparta.barbershopp/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-[#a8a8a8] hover:text-[#3aab4a] transition-colors duration-200 group"
+            className="inline-flex items-center gap-2 text-sm text-[#a8a8a8] hover:text-[#B8B8B8] transition-colors duration-200 group"
           >
             <span>Ver mais no Instagram</span>
-            <span className="text-[#3aab4a] group-hover:translate-x-1 transition-transform duration-200">
-              @barbearia.de.primeira
+            <span className="text-[#B8B8B8] group-hover:translate-x-1 transition-transform duration-200">
+              @sparta.barbershopp
             </span>
           </a>
         </motion.div>

@@ -47,7 +47,7 @@ export function PhoneInput({
                 value={formatted}
                 onChange={handleChange}
                 placeholder={placeholder}
-                className="w-full bg-[#272727] ring-1 ring-white/10 rounded-sm px-4 py-3 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#3aab4a] transition-all duration-200"
+                className="w-full bg-[#272727] ring-1 ring-white/10 rounded-sm px-4 py-3 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#B8B8B8] transition-all duration-200"
             />
         </div>
     );

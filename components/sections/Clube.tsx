@@ -63,9 +63,9 @@ export default function Clube() {
     <section ref={ref} className="py-28 bg-[#111111] relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#3aab4a]/30 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#3aab4a]/30 to-transparent" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#3aab4a]/5 blur-[120px] rounded-full" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#B8B8B8]/30 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#B8B8B8]/30 to-transparent" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#B8B8B8]/5 blur-[120px] rounded-full" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -77,11 +77,11 @@ export default function Clube() {
             transition={{ duration: 0.6 }}
             className="inline-flex items-center gap-2 mb-4"
           >
-            <div className="w-6 h-px bg-[#3aab4a]" />
-            <span className="text-xs font-medium tracking-[0.25em] uppercase text-[#3aab4a]">
+            <div className="w-6 h-px bg-[#B8B8B8]" />
+            <span className="text-xs font-medium tracking-[0.25em] uppercase text-[#B8B8B8]">
               Exclusividade
             </span>
-            <div className="w-6 h-px bg-[#3aab4a]" />
+            <div className="w-6 h-px bg-[#B8B8B8]" />
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -95,7 +95,7 @@ export default function Clube() {
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" as const }}
-            className="font-display text-[clamp(40px,5vw,72px)] text-[#3aab4a] leading-[0.9] tracking-tight mb-4"
+            className="font-display text-[clamp(40px,5vw,72px)] text-[#B8B8B8] leading-[0.9] tracking-tight mb-4"
           >
             ASSINATURAS
           </motion.h2>
@@ -126,12 +126,12 @@ export default function Clube() {
                 }}
                 className={`relative rounded-sm p-8 flex flex-col ring-1 transition-all duration-300 ${
                   plano.destaque
-                    ? "bg-[#3aab4a] ring-[#3aab4a] shadow-[0_0_60px_rgba(58,171,74,0.25)] scale-[1.02]"
-                    : "bg-[#272727] ring-white/5 hover:ring-[#3aab4a]/30"
+                    ? "bg-[#B8B8B8] ring-[#B8B8B8] shadow-[0_0_60px_rgba(184,184,184,0.25)] scale-[1.02]"
+                    : "bg-[#272727] ring-white/5 hover:ring-[#B8B8B8]/30"
                 }`}
               >
                 {plano.destaque && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#111111] text-[#3aab4a] text-[10px] font-semibold tracking-widest uppercase px-4 py-1 rounded-full border border-[#3aab4a]/30">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#111111] text-[#B8B8B8] text-[10px] font-semibold tracking-widest uppercase px-4 py-1 rounded-full border border-[#B8B8B8]/30">
                     Mais popular
                   </div>
                 )}
@@ -139,12 +139,12 @@ export default function Clube() {
                 <div className="mb-6">
                   <div
                     className={`w-10 h-10 rounded-sm flex items-center justify-center mb-4 ${
-                      plano.destaque ? "bg-[#111111]/20" : "bg-[#3aab4a]/10"
+                      plano.destaque ? "bg-[#111111]/20" : "bg-[#B8B8B8]/10"
                     }`}
                   >
                     <Icon
                       size={18}
-                      className={plano.destaque ? "text-[#111111]" : "text-[#3aab4a]"}
+                      className={plano.destaque ? "text-[#111111]" : "text-[#B8B8B8]"}
                     />
                   </div>
                   <h3
@@ -186,7 +186,7 @@ export default function Clube() {
                       <Check
                         size={14}
                         className={
-                          plano.destaque ? "text-[#111111]" : "text-[#3aab4a]"
+                          plano.destaque ? "text-[#111111]" : "text-[#B8B8B8]"
                         }
                       />
                       <span
@@ -204,8 +204,8 @@ export default function Clube() {
                   href="/clube"
                   className={`block text-center py-3 rounded-sm font-semibold tracking-widest uppercase text-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 ${
                     plano.destaque
-                      ? "bg-[#111111] text-[#3aab4a] hover:bg-[#1a1a1a] focus-visible:ring-[#111111]"
-                      : "bg-[#3aab4a] text-[#111111] hover:bg-[#4ec55e] focus-visible:ring-[#3aab4a]"
+                      ? "bg-[#111111] text-[#B8B8B8] hover:bg-[#1a1a1a] focus-visible:ring-[#111111]"
+                      : "bg-[#B8B8B8] text-[#111111] hover:bg-[#D4D4D4] focus-visible:ring-[#B8B8B8]"
                   }`}
                 >
                   Assinar {plano.nome}

@@ -29,7 +29,7 @@ export default function Servicos() {
       className="py-28 bg-[#0c0c0c] relative overflow-hidden"
     >
       {/* Accent */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[#3aab4a]/5 blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[#B8B8B8]/5 blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
@@ -41,8 +41,8 @@ export default function Servicos() {
               transition={{ duration: 0.6 }}
               className="flex items-center gap-2 mb-4"
             >
-              <div className="w-6 h-px bg-[#3aab4a]" />
-              <span className="text-xs font-medium tracking-[0.25em] uppercase text-[#3aab4a]">
+              <div className="w-6 h-px bg-[#B8B8B8]" />
+              <span className="text-xs font-medium tracking-[0.25em] uppercase text-[#B8B8B8]">
                 O que oferecemos
               </span>
             </motion.div>
@@ -58,7 +58,7 @@ export default function Servicos() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" as const }}
-              className="font-display text-[clamp(40px,5vw,72px)] text-[#3aab4a] leading-[0.9] tracking-tight"
+              className="font-display text-[clamp(40px,5vw,72px)] text-[#B8B8B8] leading-[0.9] tracking-tight"
             >
               SERVIÇOS
             </motion.h2>
@@ -70,7 +70,7 @@ export default function Servicos() {
           >
             <Link
               href="/servicos"
-              className="inline-flex items-center gap-2 text-sm text-[#a8a8a8] hover:text-[#3aab4a] transition-colors duration-200 group"
+              className="inline-flex items-center gap-2 text-sm text-[#a8a8a8] hover:text-[#B8B8B8] transition-colors duration-200 group"
             >
               Ver catálogo completo
               <ArrowRight
@@ -86,28 +86,28 @@ export default function Servicos() {
           {destaque.map((servico, i) => (
             <motion.div
               key={servico.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{
-                duration: 0.6,
-                delay: 0.1 * i + 0.3,
+                duration: 0.5,
+                delay: 0.06 * i + 0.2,
                 ease: "easeOut" as const,
               }}
             >
               <Link
                 href={`/agendar?servico=${servico.id}`}
-                className="group relative bg-[#272727] rounded-sm ring-1 ring-white/5 p-6 hover:ring-[#3aab4a]/40 hover:bg-[#2f2f2f] transition-all duration-300 flex flex-col h-full block"
+                className="group relative bg-[#272727] rounded-sm ring-1 ring-white/5 p-6 hover:ring-[#B8B8B8]/40 hover:bg-[#2f2f2f] transition-all duration-300 flex flex-col h-full block"
               >
                 {/* Popular badge */}
                 <div className="absolute top-4 right-4">
-                  <span className="text-[10px] tracking-widest uppercase text-[#3aab4a] font-medium">
+                  <span className="text-[10px] tracking-widest uppercase text-[#B8B8B8] font-medium">
                     Popular
                   </span>
                 </div>
 
                 <div className="text-3xl mb-4">{icones[servico.id] ?? "✂️"}</div>
 
-                <h3 className="font-display text-xl text-[#f5f0eb] tracking-wide mb-2 group-hover:text-[#3aab4a] transition-colors duration-200">
+                <h3 className="font-display text-xl text-[#f5f0eb] tracking-wide mb-2 group-hover:text-[#B8B8B8] transition-colors duration-200">
                   {servico.nome.toUpperCase()}
                 </h3>
 
@@ -116,7 +116,7 @@ export default function Servicos() {
                 </p>
 
                 <div className="flex items-center justify-between mt-auto">
-                  <p className="font-display text-2xl text-[#3aab4a]">
+                  <p className="font-display text-2xl text-[#B8B8B8]">
                     R$ {servico.preco}
                   </p>
                   <div className="flex items-center gap-1 text-[#a8a8a8] text-xs">
@@ -126,7 +126,7 @@ export default function Servicos() {
                 </div>
 
                 {/* Hover line */}
-                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#3aab4a] group-hover:w-full transition-all duration-400 rounded-b-sm" />
+                <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#B8B8B8] group-hover:w-full transition-all duration-400 rounded-b-sm" />
               </Link>
             </motion.div>
           ))}
@@ -141,7 +141,7 @@ export default function Servicos() {
         >
           <Link
             href="/agendar"
-            className="inline-flex items-center gap-2 px-10 py-4 bg-[#3aab4a] text-[#111111] font-semibold tracking-widest uppercase text-sm rounded-sm hover:bg-[#4ec55e] active:bg-[#2d8c3a] transition-all duration-200 shadow-[0_0_30px_rgba(58,171,74,0.2)] hover:shadow-[0_0_40px_rgba(58,171,74,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3aab4a]"
+            className="inline-flex items-center gap-2 px-10 py-4 bg-[#B8B8B8] text-[#111111] font-semibold tracking-widest uppercase text-sm rounded-sm hover:bg-[#D4D4D4] active:bg-[#888888] transition-all duration-200 shadow-[0_0_30px_rgba(184,184,184,0.2)] hover:shadow-[0_0_40px_rgba(184,184,184,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8B8B8]"
           >
             Agendar agora
           </Link>

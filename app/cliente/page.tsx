@@ -85,24 +85,24 @@ export default function ClientePage() {
         setCliente(profile);
       }
 
-      // Agendamentos
-      const { data: ags } = await supabase
-        .from("agendamentos")
-        .select("*")
-        .eq("cliente_id", user.id)
-        .order("data", { ascending: false });
-      setAgendamentos(ags ?? []);
-
-      // Clube
-      const { data: sub } = await supabase
-        .from("clube_assinaturas")
-        .select("*")
-        .eq("cliente_id", user.id)
-        .eq("status", "ativo")
-        .order("data_fim", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-      setClube(sub);
+      // Agendamentos + Clube (parallel)
+      const [agResult, subResult] = await Promise.all([
+        supabase
+          .from("agendamentos")
+          .select("*")
+          .eq("cliente_id", user.id)
+          .order("data", { ascending: false }),
+        supabase
+          .from("clube_assinaturas")
+          .select("*")
+          .eq("cliente_id", user.id)
+          .eq("status", "ativo")
+          .order("data_fim", { ascending: false })
+          .limit(1)
+          .maybeSingle(),
+      ]);
+      setAgendamentos(agResult.data ?? []);
+      setClube(subResult.data);
 
       setLoading(false);
     });
@@ -147,7 +147,7 @@ export default function ClientePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#111111] flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-[#3aab4a] border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-2 border-[#B8B8B8] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -177,7 +177,7 @@ export default function ClientePage() {
               key={id}
               onClick={() => setTab(id)}
               className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-xs font-medium tracking-wider uppercase rounded-sm transition-all duration-200 ${
-                tab === id ? "bg-[#3aab4a] text-[#111111]" : "text-[#a8a8a8] hover:text-[#f5f0eb]"
+                tab === id ? "bg-[#B8B8B8] text-[#111111]" : "text-[#a8a8a8] hover:text-[#f5f0eb]"
               }`}
             >
               <Icon size={13} />
@@ -200,21 +200,21 @@ export default function ClientePage() {
                 </div>
                 <div className="bg-[#272727] rounded-sm ring-1 ring-white/5 p-5">
                   <p className="text-[10px] text-[#a8a8a8] tracking-widest uppercase mb-2">Total gasto</p>
-                  <p className="font-display text-3xl text-[#3aab4a]">R$ {totalGasto}</p>
+                  <p className="font-display text-3xl text-[#B8B8B8]">R$ {totalGasto}</p>
                 </div>
                 {clube ? (
-                  <div className="bg-[#3aab4a]/10 rounded-sm ring-1 ring-[#3aab4a]/30 p-5 col-span-2 sm:col-span-1">
-                    <p className="text-[10px] text-[#3aab4a] tracking-widest uppercase mb-2">Clube ativo</p>
+                  <div className="bg-[#B8B8B8]/10 rounded-sm ring-1 ring-[#B8B8B8]/30 p-5 col-span-2 sm:col-span-1">
+                    <p className="text-[10px] text-[#B8B8B8] tracking-widest uppercase mb-2">Clube ativo</p>
                     <p className="font-display text-3xl text-[#f5f0eb]">{diasRestantes}d</p>
                     <p className="text-xs text-[#a8a8a8] mt-1">restantes</p>
                   </div>
                 ) : (
                   <Link
                     href="/clube"
-                    className="hidden sm:flex flex-col justify-between bg-[#1a1a1a] rounded-sm ring-1 ring-white/5 p-5 hover:ring-[#3aab4a]/30 transition-all group"
+                    className="hidden sm:flex flex-col justify-between bg-[#1a1a1a] rounded-sm ring-1 ring-white/5 p-5 hover:ring-[#B8B8B8]/30 transition-all group"
                   >
                     <p className="text-[10px] text-[#a8a8a8] tracking-widest uppercase mb-2">Clube</p>
-                    <p className="text-xs text-[#3aab4a] group-hover:text-[#4ec55e] transition-colors flex items-center gap-1">
+                    <p className="text-xs text-[#B8B8B8] group-hover:text-[#D4D4D4] transition-colors flex items-center gap-1">
                       Conhecer <ChevronRight size={11} />
                     </p>
                   </Link>
@@ -228,7 +228,7 @@ export default function ClientePage() {
                   {proximos.length > 0 && (
                     <button
                       onClick={() => setTab("agendamentos")}
-                      className="text-xs text-[#3aab4a] hover:text-[#4ec55e] transition-colors flex items-center gap-1"
+                      className="text-xs text-[#B8B8B8] hover:text-[#D4D4D4] transition-colors flex items-center gap-1"
                     >
                       Ver todos <ChevronRight size={12} />
                     </button>
@@ -241,7 +241,7 @@ export default function ClientePage() {
                     <p className="text-[#a8a8a8] text-sm mb-5">Nenhum agendamento próximo</p>
                     <Link
                       href="/agendar"
-                      className="inline-flex px-6 py-2.5 bg-[#3aab4a] text-[#111111] text-xs font-semibold tracking-widest uppercase rounded-sm hover:bg-[#4ec55e] transition-colors"
+                      className="inline-flex px-6 py-2.5 bg-[#B8B8B8] text-[#111111] text-xs font-semibold tracking-widest uppercase rounded-sm hover:bg-[#D4D4D4] transition-colors"
                     >
                       Agendar agora
                     </Link>
@@ -262,7 +262,7 @@ export default function ClientePage() {
                 <h2 className="font-display text-xl text-[#f5f0eb] tracking-wide">AGENDAMENTOS</h2>
                 <Link
                   href="/agendar"
-                  className="px-5 py-2 bg-[#3aab4a] text-[#111111] text-xs font-semibold tracking-widest uppercase rounded-sm hover:bg-[#4ec55e] transition-colors"
+                  className="px-5 py-2 bg-[#B8B8B8] text-[#111111] text-xs font-semibold tracking-widest uppercase rounded-sm hover:bg-[#D4D4D4] transition-colors"
                 >
                   + Novo
                 </Link>
@@ -290,7 +290,7 @@ export default function ClientePage() {
                       </div>
                       <div className="mt-4 p-4 bg-[#272727] rounded-sm ring-1 ring-white/5 flex justify-between items-center">
                         <span className="text-[#a8a8a8] text-sm">Total investido</span>
-                        <span className="font-display text-2xl text-[#3aab4a]">R$ {totalGasto}</span>
+                        <span className="font-display text-2xl text-[#B8B8B8]">R$ {totalGasto}</span>
                       </div>
                     </div>
                   )}
@@ -305,16 +305,16 @@ export default function ClientePage() {
               <h2 className="font-display text-xl text-[#f5f0eb] tracking-wide mb-6">CLUBE DE ASSINATURA</h2>
 
               {clube ? (
-                <div className="bg-[#272727] rounded-sm ring-1 ring-[#3aab4a]/20 p-6 relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-48 h-48 bg-[#3aab4a]/5 rounded-full translate-x-20 -translate-y-20 pointer-events-none" />
+                <div className="bg-[#272727] rounded-sm ring-1 ring-[#B8B8B8]/20 p-6 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-48 h-48 bg-[#B8B8B8]/5 rounded-full translate-x-20 -translate-y-20 pointer-events-none" />
                   <div className="relative">
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="w-12 h-12 rounded-full bg-[#3aab4a]/10 ring-1 ring-[#3aab4a]/30 flex items-center justify-center">
-                        <Crown size={20} className="text-[#3aab4a]" />
+                      <div className="w-12 h-12 rounded-full bg-[#B8B8B8]/10 ring-1 ring-[#B8B8B8]/30 flex items-center justify-center">
+                        <Crown size={20} className="text-[#B8B8B8]" />
                       </div>
                       <div>
                         <p className="font-display text-xl text-[#f5f0eb]">{clube.plano}</p>
-                        <span className="text-xs text-[#3aab4a] tracking-widest uppercase">{clube.status}</span>
+                        <span className="text-xs text-[#B8B8B8] tracking-widest uppercase">{clube.status}</span>
                       </div>
                     </div>
 
@@ -358,7 +358,7 @@ export default function ClientePage() {
                   </p>
                   <Link
                     href="/clube"
-                    className="inline-flex px-8 py-3 bg-[#3aab4a] text-[#111111] text-sm font-semibold tracking-widest uppercase rounded-sm hover:bg-[#4ec55e] transition-colors"
+                    className="inline-flex px-8 py-3 bg-[#B8B8B8] text-[#111111] text-sm font-semibold tracking-widest uppercase rounded-sm hover:bg-[#D4D4D4] transition-colors"
                   >
                     Conhecer o clube
                   </Link>
@@ -390,7 +390,7 @@ export default function ClientePage() {
                     <button
                       onClick={saveProfile}
                       disabled={saving}
-                      className="flex items-center gap-2 px-4 py-2 bg-[#3aab4a] text-[#111111] text-xs font-semibold rounded-sm hover:bg-[#4ec55e] transition-colors disabled:opacity-50"
+                      className="flex items-center gap-2 px-4 py-2 bg-[#B8B8B8] text-[#111111] text-xs font-semibold rounded-sm hover:bg-[#D4D4D4] transition-colors disabled:opacity-50"
                     >
                       <Check size={12} /> {saving ? "Salvando..." : "Salvar"}
                     </button>
@@ -418,7 +418,7 @@ export default function ClientePage() {
                         value={editForm[field as keyof typeof editForm] ?? ""}
                         onChange={(e) => setEditForm((f) => ({ ...f, [field]: e.target.value }))}
                         placeholder={placeholder}
-                        className="flex-1 bg-[#1e1e1e] ring-1 ring-white/10 rounded-sm px-3 py-2 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#3aab4a] transition-all"
+                        className="flex-1 bg-[#1e1e1e] ring-1 ring-white/10 rounded-sm px-3 py-2 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#B8B8B8] transition-all"
                       />
                     ) : (
                       <span className={`text-sm font-medium ${value ? "text-[#f5f0eb]" : "text-[#a8a8a8]/40 italic"}`}>
@@ -465,7 +465,7 @@ function AgendamentoCard({
     >
       {/* Date badge */}
       <div className="w-12 h-12 rounded-sm bg-[#1e1e1e] ring-1 ring-white/5 flex flex-col items-center justify-center shrink-0">
-        <span className="font-display text-lg text-[#3aab4a] leading-none">{date.getDate()}</span>
+        <span className="font-display text-lg text-[#B8B8B8] leading-none">{date.getDate()}</span>
         <span className="text-[10px] text-[#a8a8a8] uppercase">
           {date.toLocaleDateString("pt-BR", { month: "short" })}
         </span>
@@ -492,11 +492,11 @@ function AgendamentoCard({
       {/* Price + status */}
       <div className="text-right shrink-0">
         {a.servico_preco != null && (
-          <p className="font-display text-lg text-[#3aab4a]">R$ {a.servico_preco}</p>
+          <p className="font-display text-lg text-[#B8B8B8]">R$ {a.servico_preco}</p>
         )}
         {showStatus && (
           <span className={`text-[10px] uppercase tracking-widest ${
-            a.status === "confirmado" ? "text-[#3aab4a]" : "text-[#a8a8a8]"
+            a.status === "confirmado" ? "text-[#B8B8B8]" : "text-[#a8a8a8]"
           }`}>
             {a.status}
           </span>

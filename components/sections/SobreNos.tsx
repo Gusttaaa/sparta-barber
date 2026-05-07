@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 import { useRef } from "react";
 
 const stats = [
@@ -17,7 +18,7 @@ export default function SobreNos() {
   return (
     <section ref={ref} className="py-28 bg-[#111111] relative overflow-hidden">
       {/* Background accent */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#3aab4a]/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#B8B8B8]/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -29,17 +30,20 @@ export default function SobreNos() {
             className="relative"
           >
             <div className="relative aspect-[4/5] rounded-sm overflow-hidden ring-1 ring-white/10">
-              <img
-                src="https://placehold.co/480x600/1e1e1e/272727?text=."
-                alt="Sobre a Barbearia de Primeira"
+              <Image
+                src="https://placehold.co/480x600/1e1e1e/272727?text=.&format=png"
+                alt="Sobre a Sparta Barber"
+                width={480}
+                height={600}
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-[#111111]/60 to-transparent" />
-              <div className="absolute inset-0 bg-[#3aab4a]/10 mix-blend-multiply" />
+              <div className="absolute inset-0 bg-[#B8B8B8]/10 mix-blend-multiply" />
             </div>
 
             {/* Floating badge */}
-            <div className="absolute -bottom-6 -right-6 bg-[#3aab4a] p-6 rounded-sm shadow-[0_20px_60px_rgba(58,171,74,0.3)]">
+            <div className="absolute -bottom-6 -right-6 bg-[#B8B8B8] p-6 rounded-sm shadow-[0_20px_60px_rgba(184,184,184,0.3)]">
               <p className="font-display text-5xl text-[#111111] leading-none">10</p>
               <p className="font-display text-lg text-[#111111]/80 leading-none">
                 ANOS
@@ -55,8 +59,8 @@ export default function SobreNos() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="flex items-center gap-2 mb-4"
             >
-              <div className="w-6 h-px bg-[#3aab4a]" />
-              <span className="text-xs font-medium tracking-[0.25em] uppercase text-[#3aab4a]">
+              <div className="w-6 h-px bg-[#B8B8B8]" />
+              <span className="text-xs font-medium tracking-[0.25em] uppercase text-[#B8B8B8]">
                 Nossa história
               </span>
             </motion.div>
@@ -73,7 +77,7 @@ export default function SobreNos() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" as const }}
-              className="font-display text-[clamp(40px,5vw,72px)] text-[#3aab4a] leading-[0.9] tracking-tight mb-6"
+              className="font-display text-[clamp(40px,5vw,72px)] text-[#B8B8B8] leading-[0.9] tracking-tight mb-6"
             >
               BARBEARIA
             </motion.h2>
@@ -110,9 +114,9 @@ export default function SobreNos() {
               {stats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="py-4 px-5 bg-[#272727] rounded-sm ring-1 ring-white/5 hover:ring-[#3aab4a]/20 transition-all duration-300"
+                  className="py-4 px-5 bg-[#272727] rounded-sm ring-1 ring-white/5 hover:ring-[#B8B8B8]/20 transition-all duration-300"
                 >
-                  <p className="font-display text-3xl text-[#3aab4a] leading-none mb-1">
+                  <p className="font-display text-3xl text-[#B8B8B8] leading-none mb-1">
                     {stat.value}
                   </p>
                   <p className="text-xs tracking-wider uppercase text-[#a8a8a8]">

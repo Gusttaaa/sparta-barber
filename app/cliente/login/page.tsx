@@ -77,6 +77,19 @@ export default function LoginPage() {
           setError(result.error.message);
       }
     } else {
+      // If signing up, create clientes record
+      if (isSignUp && result.data.user) {
+        try {
+          await supabase.from("clientes").insert({
+            id: result.data.user.id,
+            nome: name,
+            email: email,
+            telefone: phone,
+          });
+        } catch (err) {
+          console.error("Error creating cliente record:", err);
+        }
+      }
       router.push("/cliente");
     }
   };
@@ -96,8 +109,8 @@ export default function LoginPage() {
       >
         {/* Logo */}
         <div className="text-center mb-10">
-          <div className="w-16 h-16 rounded-full overflow-hidden ring-1 ring-white/10 mx-auto mb-4">
-            <Image src="/logo.png" alt="Logo" width={64} height={64} className="w-full h-full object-cover" />
+          <div className="w-16 h-16 overflow-hidden ring-1 ring-white/10 mx-auto mb-4">
+            <Image src="/spartabarberlogo.jpg" alt="Sparta Barber" width={64} height={64} className="w-full h-full object-cover" />
           </div>
           <h1 className="font-display text-3xl text-[#f5f0eb] tracking-wider">ÁREA DO CLIENTE</h1>
           <p className="text-[#a8a8a8] text-sm mt-2">Acesse seus agendamentos e muito mais</p>
@@ -110,7 +123,7 @@ export default function LoginPage() {
               key={id}
               onClick={() => reset(id)}
               className={`flex-1 flex items-center justify-center gap-1.5 py-2.5 text-xs font-medium tracking-wider uppercase rounded-sm transition-all duration-200 ${
-                mode === id ? "bg-[#3aab4a] text-[#111111]" : "text-[#a8a8a8] hover:text-[#f5f0eb]"
+                mode === id ? "bg-[#B8B8B8] text-[#111111]" : "text-[#a8a8a8] hover:text-[#f5f0eb]"
               }`}
             >
               <Icon size={12} />
@@ -134,8 +147,8 @@ export default function LoginPage() {
               <div>
                 {sent ? (
                   <div className="text-center py-10 px-6 bg-[#272727] rounded-sm ring-1 ring-white/5">
-                    <div className="w-14 h-14 rounded-full bg-[#3aab4a]/10 ring-1 ring-[#3aab4a]/30 flex items-center justify-center mx-auto mb-4">
-                      <Mail size={24} className="text-[#3aab4a]" />
+                    <div className="w-14 h-14 rounded-full bg-[#B8B8B8]/10 ring-1 ring-[#B8B8B8]/30 flex items-center justify-center mx-auto mb-4">
+                      <Mail size={24} className="text-[#B8B8B8]" />
                     </div>
                     <h3 className="font-display text-xl text-[#f5f0eb] mb-2">Verifique seu e-mail</h3>
                     <p className="text-[#a8a8a8] text-sm">
@@ -145,7 +158,7 @@ export default function LoginPage() {
                     </p>
                     <button
                       onClick={() => setSent(false)}
-                      className="mt-6 text-xs text-[#a8a8a8] hover:text-[#3aab4a] transition-colors"
+                      className="mt-6 text-xs text-[#a8a8a8] hover:text-[#B8B8B8] transition-colors"
                     >
                       Usar outro e-mail
                     </button>
@@ -161,12 +174,12 @@ export default function LoginPage() {
                       onChange={(e) => setEmail(e.target.value)}
                       onKeyDown={(e) => e.key === "Enter" && handleMagicLink()}
                       placeholder="seu@email.com"
-                      className="w-full bg-[#272727] ring-1 ring-white/10 rounded-sm px-4 py-3 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#3aab4a] transition-all"
+                      className="w-full bg-[#272727] ring-1 ring-white/10 rounded-sm px-4 py-3 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#B8B8B8] transition-all"
                     />
                     <button
                       onClick={handleMagicLink}
                       disabled={loading || !email}
-                      className="w-full py-3 bg-[#3aab4a] text-[#111111] font-semibold text-sm tracking-widest uppercase rounded-sm hover:bg-[#4ec55e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full py-3 bg-[#B8B8B8] text-[#111111] font-semibold text-sm tracking-widest uppercase rounded-sm hover:bg-[#D4D4D4] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {loading ? "Enviando..." : "Enviar link"}
                     </button>
@@ -196,7 +209,7 @@ export default function LoginPage() {
               <div className="space-y-4">
                 {isSignUp && (
                   <>
-                    <input type="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nome" className="w-full bg-[#272727] ring-1 ring-white/10 rounded-sm px-4 py-3 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#3aab4a] transition-all" />
+                    <input type="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nome" className="w-full bg-[#272727] ring-1 ring-white/10 rounded-sm px-4 py-3 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#B8B8B8] transition-all" />
 
                     <PhoneInput
                       placeholder="Telefone"
@@ -210,7 +223,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="E-mail"
-                  className="w-full bg-[#272727] ring-1 ring-white/10 rounded-sm px-4 py-3 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#3aab4a] transition-all"
+                  className="w-full bg-[#272727] ring-1 ring-white/10 rounded-sm px-4 py-3 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#B8B8B8] transition-all"
                 />
                 <input
                   type="password"
@@ -218,12 +231,12 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleEmailPassword()}
                   placeholder="Senha"
-                  className="w-full bg-[#272727] ring-1 ring-white/10 rounded-sm px-4 py-3 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#3aab4a] transition-all"
+                  className="w-full bg-[#272727] ring-1 ring-white/10 rounded-sm px-4 py-3 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#B8B8B8] transition-all"
                 />
                 <button
                   onClick={handleEmailPassword}
                   disabled={loading || !email || !password}
-                  className="w-full py-3 bg-[#3aab4a] text-[#111111] font-semibold text-sm tracking-widest uppercase rounded-sm hover:bg-[#4ec55e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-3 bg-[#B8B8B8] text-[#111111] font-semibold text-sm tracking-widest uppercase rounded-sm hover:bg-[#D4D4D4] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? "Aguarde..." : isSignUp ? "Criar conta" : "Entrar"}
                 </button>
@@ -239,7 +252,7 @@ export default function LoginPage() {
         </AnimatePresence>
 
         {error && (
-          <p className={`mt-4 text-sm text-center ${error.includes("Conta criada") ? "text-[#3aab4a]" : "text-red-400"}`}>
+          <p className={`mt-4 text-sm text-center ${error.includes("Conta criada") ? "text-[#B8B8B8]" : "text-red-400"}`}>
             {error}
           </p>
         )}

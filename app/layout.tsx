@@ -13,8 +13,8 @@ const bebasNeue = Bebas_Neue({
 });
 
 const cormorantGaramond = Cormorant_Garamond({
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  weight: ["300", "400"],
+  style: ["italic"],
   variable: "--font-cormorant",
   subsets: ["latin"],
   display: "swap",
@@ -28,11 +28,12 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Barbearia de Primeira | Recreio · Barra · Guanabara",
+  title: "Sparta Barber | Recreio · Barra · Guanabara",
   description:
-    "A barbearia premium do Rio de Janeiro. Cortes, barba, clube de assinaturas e muito mais em 3 unidades: Recreio dos Bandeirantes, Barra da Tijuca e Guanabara.",
+    "Sparta Barber — Corte de elite. Cortes, barba, clube de assinaturas e muito mais em 3 unidades: Recreio dos Bandeirantes, Barra da Tijuca e Guanabara.",
   keywords: [
     "barbearia",
+    "sparta barber",
     "recreio",
     "barra",
     "rio de janeiro",
@@ -41,8 +42,8 @@ export const metadata: Metadata = {
     "barbearia premium",
   ],
   openGraph: {
-    title: "Barbearia de Primeira",
-    description: "De primeira qualidade. Sempre.",
+    title: "Sparta Barber",
+    description: "Corte de elite.",
     type: "website",
   },
 };

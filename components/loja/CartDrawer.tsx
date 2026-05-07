@@ -15,12 +15,12 @@ export function CartButton() {
   const { count } = useCart();
   return (
     <SheetTrigger
-      className="relative p-2 text-[#f5f0eb] hover:text-[#3aab4a] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3aab4a] rounded-sm bg-transparent border-0 cursor-pointer"
+      className="relative p-2 text-[#f5f0eb] hover:text-[#B8B8B8] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8B8B8] rounded-sm bg-transparent border-0 cursor-pointer"
       aria-label="Abrir carrinho"
     >
       <ShoppingBag size={20} />
       {count > 0 && (
-        <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#3aab4a] text-[#111111] text-[10px] font-bold rounded-full flex items-center justify-center">
+        <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#B8B8B8] text-[#111111] text-[10px] font-bold rounded-full flex items-center justify-center">
           {count > 9 ? "9+" : count}
         </span>
       )}
@@ -47,7 +47,7 @@ export default function CartDrawer() {
       >
         <SheetHeader className="border-b border-white/5 pb-4">
           <SheetTitle className="font-display text-xl tracking-wider text-[#f5f0eb] flex items-center gap-2">
-            <ShoppingBag size={18} className="text-[#3aab4a]" />
+            <ShoppingBag size={18} className="text-[#B8B8B8]" />
             CARRINHO
             {count > 0 && (
               <span className="text-sm font-sans text-[#a8a8a8] font-normal ml-1">
@@ -88,7 +88,7 @@ export default function CartDrawer() {
                     <p className="text-[#f5f0eb] text-sm font-medium leading-tight mb-1 line-clamp-2">
                       {produto.nome}
                     </p>
-                    <p className="font-display text-lg text-[#3aab4a] leading-none">
+                    <p className="font-display text-lg text-[#B8B8B8] leading-none">
                       R$ {produto.preco}
                     </p>
                   </div>
@@ -103,7 +103,7 @@ export default function CartDrawer() {
                     <div className="flex items-center gap-1.5">
                       <button
                         onClick={() => decrement(produto.id)}
-                        className="w-6 h-6 flex items-center justify-center rounded-sm bg-[#313131] text-[#f5f0eb] hover:bg-[#3aab4a] hover:text-[#111111] transition-all duration-200"
+                        className="w-6 h-6 flex items-center justify-center rounded-sm bg-[#313131] text-[#f5f0eb] hover:bg-[#B8B8B8] hover:text-[#111111] transition-all duration-200"
                         aria-label="Diminuir"
                       >
                         <Minus size={11} />
@@ -113,7 +113,7 @@ export default function CartDrawer() {
                       </span>
                       <button
                         onClick={() => increment(produto.id)}
-                        className="w-6 h-6 flex items-center justify-center rounded-sm bg-[#313131] text-[#f5f0eb] hover:bg-[#3aab4a] hover:text-[#111111] transition-all duration-200"
+                        className="w-6 h-6 flex items-center justify-center rounded-sm bg-[#313131] text-[#f5f0eb] hover:bg-[#B8B8B8] hover:text-[#111111] transition-all duration-200"
                         aria-label="Aumentar"
                       >
                         <Plus size={11} />
@@ -136,7 +136,7 @@ export default function CartDrawer() {
               </p>
               <button
                 onClick={handleCheckout}
-                className="w-full py-3.5 bg-[#3aab4a] text-[#111111] font-semibold tracking-widest uppercase text-sm rounded-sm hover:bg-[#4ec55e] active:bg-[#2d8c3a] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3aab4a] shadow-[0_0_20px_rgba(58,171,74,0.2)]"
+                className="w-full py-3.5 bg-[#B8B8B8] text-[#111111] font-semibold tracking-widest uppercase text-sm rounded-sm hover:bg-[#D4D4D4] active:bg-[#888888] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8B8B8] shadow-[0_0_20px_rgba(184,184,184,0.2)]"
               >
                 Finalizar Pedido
               </button>

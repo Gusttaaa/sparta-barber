@@ -11,10 +11,10 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 mb-4">
-              <div className="w-14 h-14 rounded-full overflow-hidden ring-1 ring-white/10">
+              <div className="w-14 h-14 overflow-hidden ring-1 ring-white/10">
                 <Image
-                  src="/logo.png"
-                  alt="Barbearia de Primeira"
+                  src="/spartabarberlogo.jpg"
+                  alt="Sparta Barber"
                   width={56}
                   height={56}
                   className="w-full h-full object-cover"
@@ -22,23 +22,23 @@ export default function Footer() {
               </div>
               <div>
                 <p className="font-display text-base tracking-wider text-[#f5f0eb] leading-none">
-                  BARBEARIA
+                  SPARTA
                 </p>
-                <p className="font-display text-base tracking-wider text-[#3aab4a] leading-none">
-                  DE PRIMEIRA
+                <p className="font-display text-base tracking-wider text-[#B8B8B8] leading-none">
+                  BARBER
                 </p>
               </div>
             </Link>
             <p className="text-[#a8a8a8] text-sm leading-relaxed mt-4 mb-6">
-              De primeira qualidade. Sempre. Três unidades para atender você no
+              Corte de elite. Três unidades para atender você no
               Rio de Janeiro.
             </p>
             <div className="flex items-center gap-3">
               <a
-                href="https://instagram.com/barbearia.de.primeira"
+                href="https://www.instagram.com/sparta.barbershopp/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 flex items-center justify-center rounded-sm bg-white/5 text-[#a8a8a8] hover:bg-[#3aab4a] hover:text-[#111111] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3aab4a]"
+                className="w-9 h-9 flex items-center justify-center rounded-sm bg-white/5 text-[#a8a8a8] hover:bg-[#B8B8B8] hover:text-[#111111] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8B8B8]"
                 aria-label="Instagram"
               >
                 <Share2 size={16} />
@@ -47,7 +47,7 @@ export default function Footer() {
                 href={`https://wa.me/${unidades[0].whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 flex items-center justify-center rounded-sm bg-white/5 text-[#a8a8a8] hover:bg-[#3aab4a] hover:text-[#111111] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3aab4a]"
+                className="w-9 h-9 flex items-center justify-center rounded-sm bg-white/5 text-[#a8a8a8] hover:bg-[#B8B8B8] hover:text-[#111111] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8B8B8]"
                 aria-label="WhatsApp"
               >
                 <MessageCircle size={16} />
@@ -71,7 +71,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[#a8a8a8] hover:text-[#3aab4a] transition-colors duration-200"
+                    className="text-sm text-[#a8a8a8] hover:text-[#B8B8B8] transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -88,7 +88,7 @@ export default function Footer() {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {unidades.map((u) => (
                 <div key={u.id}>
-                  <p className="font-display tracking-wider text-[#3aab4a] text-sm mb-1">
+                  <p className="font-display tracking-wider text-[#B8B8B8] text-sm mb-1">
                     {u.nome.toUpperCase()}
                   </p>
                   <div className="flex items-start gap-1.5 mb-1">
@@ -113,7 +113,7 @@ export default function Footer() {
                     href={`https://wa.me/${u.whatsapp}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-xs text-[#3aab4a] hover:text-[#4ec55e] transition-colors duration-200"
+                    className="inline-flex items-center gap-1 text-xs text-[#B8B8B8] hover:text-[#D4D4D4] transition-colors duration-200"
                   >
                     <MessageCircle size={11} />
                     WhatsApp
@@ -126,7 +126,7 @@ export default function Footer() {
 
         <div className="mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[#a8a8a8] text-xs">
-            © {new Date().getFullYear()} Barbearia de Primeira. Todos os
+            © {new Date().getFullYear()} Sparta Barber. Todos os
             direitos reservados.
           </p>
           <p className="text-[#a8a8a8] text-xs">

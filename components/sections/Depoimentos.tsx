@@ -64,7 +64,7 @@ export default function Depoimentos() {
 
   return (
     <section ref={ref} className="py-28 bg-[#0c0c0c] relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#3aab4a]/5 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#B8B8B8]/5 blur-[100px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
@@ -76,8 +76,8 @@ export default function Depoimentos() {
               transition={{ duration: 0.6 }}
               className="flex items-center gap-2 mb-4"
             >
-              <div className="w-6 h-px bg-[#3aab4a]" />
-              <span className="text-xs font-medium tracking-[0.25em] uppercase text-[#3aab4a]">
+              <div className="w-6 h-px bg-[#B8B8B8]" />
+              <span className="text-xs font-medium tracking-[0.25em] uppercase text-[#B8B8B8]">
                 O que dizem
               </span>
             </motion.div>
@@ -88,7 +88,7 @@ export default function Depoimentos() {
               className="font-display text-[clamp(40px,5vw,72px)] leading-[0.9] tracking-tight"
             >
               <span className="text-[#f5f0eb]">DEPOI</span>
-              <span className="text-[#3aab4a]">MENTOS</span>
+              <span className="text-[#B8B8B8]">MENTOS</span>
             </motion.h2>
           </div>
 
@@ -101,14 +101,14 @@ export default function Depoimentos() {
           >
             <button
               onClick={prev}
-              className="w-10 h-10 flex items-center justify-center rounded-sm border border-white/10 text-[#f5f0eb] hover:border-[#3aab4a] hover:text-[#3aab4a] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3aab4a]"
+              className="w-10 h-10 flex items-center justify-center rounded-sm border border-white/10 text-[#f5f0eb] hover:border-[#B8B8B8] hover:text-[#B8B8B8] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8B8B8]"
               aria-label="Anterior"
             >
               <ChevronLeft size={18} />
             </button>
             <button
               onClick={next}
-              className="w-10 h-10 flex items-center justify-center rounded-sm border border-white/10 text-[#f5f0eb] hover:border-[#3aab4a] hover:text-[#3aab4a] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3aab4a]"
+              className="w-10 h-10 flex items-center justify-center rounded-sm border border-white/10 text-[#f5f0eb] hover:border-[#B8B8B8] hover:text-[#B8B8B8] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8B8B8]"
               aria-label="Próximo"
             >
               <ChevronRight size={18} />
@@ -125,7 +125,7 @@ export default function Depoimentos() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
               className={`bg-[#272727] rounded-sm p-6 ring-1 ring-white/5 ${
-                i === 1 ? "ring-[#3aab4a]/20" : ""
+                i === 1 ? "ring-[#B8B8B8]/20" : ""
               }`}
             >
               {/* Stars */}
@@ -134,7 +134,7 @@ export default function Depoimentos() {
                   <Star
                     key={j}
                     size={13}
-                    className="text-[#3aab4a] fill-[#3aab4a]"
+                    className="text-[#B8B8B8] fill-[#B8B8B8]"
                   />
                 ))}
               </div>
@@ -152,8 +152,8 @@ export default function Depoimentos() {
                     Unidade {dep.unidade}
                   </p>
                 </div>
-                <div className="w-8 h-8 rounded-full bg-[#3aab4a]/20 flex items-center justify-center">
-                  <span className="font-display text-sm text-[#3aab4a]">
+                <div className="w-8 h-8 rounded-full bg-[#B8B8B8]/20 flex items-center justify-center">
+                  <span className="font-display text-sm text-[#B8B8B8]">
                     {dep.nome[0]}
                   </span>
                 </div>
@@ -170,7 +170,7 @@ export default function Depoimentos() {
               onClick={() => setCurrent(i)}
               className={`transition-all duration-200 rounded-full focus-visible:outline-none ${
                 i === current
-                  ? "w-6 h-1.5 bg-[#3aab4a]"
+                  ? "w-6 h-1.5 bg-[#B8B8B8]"
                   : "w-1.5 h-1.5 bg-white/20 hover:bg-white/40"
               }`}
               aria-label={`Depoimento ${i + 1}`}

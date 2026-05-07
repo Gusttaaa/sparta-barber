@@ -98,7 +98,7 @@ function Field({
       placeholder={placeholder}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={`bg-[#272727] ring-1 ring-white/10 rounded-sm px-3 py-2.5 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#3aab4a] transition-all${span ? " sm:col-span-2" : ""}`}
+      className={`bg-[#272727] ring-1 ring-white/10 rounded-sm px-3 py-2.5 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#B8B8B8] transition-all${span ? " sm:col-span-2" : ""}`}
     />
   );
 }
@@ -114,7 +114,7 @@ function Sel({
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="bg-[#272727] ring-1 ring-white/10 rounded-sm px-3 py-2.5 text-[#f5f0eb] text-sm focus:outline-none focus:ring-[#3aab4a] transition-all"
+      className="bg-[#272727] ring-1 ring-white/10 rounded-sm px-3 py-2.5 text-[#f5f0eb] text-sm focus:outline-none focus:ring-[#B8B8B8] transition-all"
     >
       {children}
     </select>
@@ -134,7 +134,7 @@ function FormActions({
       <button
         onClick={onSave}
         disabled={saving}
-        className="flex items-center gap-1.5 px-5 py-2 bg-[#3aab4a] text-[#111111] text-xs font-semibold uppercase rounded-sm hover:bg-[#4ec55e] transition-colors disabled:opacity-50"
+        className="flex items-center gap-1.5 px-5 py-2 bg-[#B8B8B8] text-[#111111] text-xs font-semibold uppercase rounded-sm hover:bg-[#D4D4D4] transition-colors disabled:opacity-50"
       >
         <Check size={12} /> {saving ? "Salvando..." : label}
       </button>
@@ -185,24 +185,51 @@ function AgendamentosTab({
     const { unidade_id, profissional_id, servico_id, data, horario, cliente_nome, cliente_telefone } = form;
     if (!unidade_id || !profissional_id || !servico_id || !data || !horario || !cliente_nome || !cliente_telefone) return;
     setSaving(true);
-    const svc = servicos.find((s) => s.id === servico_id);
-    const prof = profissionais.find((p) => p.id === profissional_id);
-    const unit = unidades.find((u) => u.id === unidade_id);
-    await supabase.from("agendamentos").insert({
-      profissional_id, profissional_nome: prof?.nome ?? null,
-      unidade_id, unidade_nome: unit?.nome ?? null,
-      servico_id, servico_nome: svc?.nome ?? null, servico_preco: svc?.preco ?? null,
-      data, horario, cliente_nome, cliente_telefone, status: "confirmado",
-    });
-    setSaving(false);
-    setShowForm(false);
-    setForm(emptyForm);
-    await onRefresh();
+    try {
+      const svc = servicos.find((s) => s.id === servico_id);
+      const prof = profissionais.find((p) => p.id === profissional_id);
+      const unit = unidades.find((u) => u.id === unidade_id);
+      const { error } = await supabase.from("agendamentos").insert({
+        profissional_id,
+        profissional_nome: prof?.nome ?? null,
+        unidade_id,
+        unidade_nome: unit?.nome ?? null,
+        servico_id,
+        servico_nome: svc?.nome ?? null,
+        servico_preco: svc?.preco ?? null,
+        data,
+        horario,
+        cliente_nome,
+        cliente_telefone,
+        status: "confirmado",
+      });
+      if (error) {
+        alert("Erro ao criar agendamento: " + error.message);
+        return;
+      }
+      setShowForm(false);
+      setForm(emptyForm);
+      await onRefresh();
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleCancel = async (id: string) => {
-    await supabase.from("agendamentos").update({ status: "cancelado" }).eq("id", id);
-    await onRefresh();
+    try {
+      const { error } = await supabase
+        .from("agendamentos")
+        .update({ status: "cancelado" })
+        .eq("id", id);
+      if (error) {
+        alert("Erro ao cancelar: " + error.message);
+        return;
+      }
+      await onRefresh();
+    } catch (err) {
+      console.error("Error canceling appointment:", err);
+      alert("Erro ao cancelar agendamento");
+    }
   };
 
   return (
@@ -223,7 +250,7 @@ function AgendamentosTab({
         </div>
         <button
           onClick={() => setShowForm((v) => !v)}
-          className="flex items-center gap-2 px-4 py-2 bg-[#3aab4a] text-[#111111] text-xs font-semibold tracking-wider uppercase rounded-sm hover:bg-[#4ec55e] transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-[#B8B8B8] text-[#111111] text-xs font-semibold tracking-wider uppercase rounded-sm hover:bg-[#D4D4D4] transition-colors"
         >
           <Plus size={13} /> Adicionar
         </button>
@@ -286,7 +313,7 @@ function AgendamentosTab({
                 <span className="text-[#f5f0eb] text-xs truncate">{a.servico_nome ?? a.servico_id}</span>
                 <span className="text-[#a8a8a8] text-xs truncate">{a.profissional_nome ?? a.profissional_id}</span>
                 <span className="text-[#a8a8a8] text-xs truncate">{a.unidade_nome ?? a.unidade_id}</span>
-                <span className="text-[#3aab4a] text-xs font-medium">
+                <span className="text-[#B8B8B8] text-xs font-medium">
                   {a.servico_preco != null ? `R$ ${a.servico_preco}` : "—"}
                 </span>
                 <div className="flex justify-end">
@@ -367,7 +394,7 @@ function BarbeirosTab({
       nome: form.nome,
       especialidade: form.especialidade || null,
       unidade_id: form.unidade_id,
-      foto: form.foto || `https://placehold.co/200x200/1e1e1e/3aab4a?text=${iniciais}`,
+      foto: form.foto || `https://placehold.co/200x200/1e1e1e/B8B8B8?text=${iniciais}`,
       rating: parseFloat(form.rating) || 5.0,
       ativo: true,
     });
@@ -415,7 +442,7 @@ function BarbeirosTab({
         <p className="text-[#a8a8a8] text-sm">{profissionais.length} profissionais</p>
         <button
           onClick={() => { setShowForm((v) => !v); setEditingId(null); }}
-          className="flex items-center gap-2 px-4 py-2 bg-[#3aab4a] text-[#111111] text-xs font-semibold tracking-wider uppercase rounded-sm hover:bg-[#4ec55e] transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-[#B8B8B8] text-[#111111] text-xs font-semibold tracking-wider uppercase rounded-sm hover:bg-[#D4D4D4] transition-colors"
         >
           <Plus size={13} /> Adicionar
         </button>
@@ -565,7 +592,7 @@ function UnidadesTab({
         <p className="text-[#a8a8a8] text-sm">{unidades.length} unidades</p>
         <button
           onClick={() => { setShowForm((v) => !v); setEditingId(null); }}
-          className="flex items-center gap-2 px-4 py-2 bg-[#3aab4a] text-[#111111] text-xs font-semibold tracking-wider uppercase rounded-sm hover:bg-[#4ec55e] transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-[#B8B8B8] text-[#111111] text-xs font-semibold tracking-wider uppercase rounded-sm hover:bg-[#D4D4D4] transition-colors"
         >
           <Plus size={13} /> Adicionar
         </button>
@@ -663,7 +690,7 @@ function ImageUploader({
 
   return (
     <div className="flex flex-col gap-2">
-      <label className={`flex items-center gap-2 px-4 py-2.5 rounded-sm ring-1 text-xs font-medium transition-all cursor-pointer select-none w-fit ${uploading ? "opacity-50 cursor-not-allowed ring-white/5 text-[#a8a8a8]" : "ring-white/10 text-[#a8a8a8] hover:ring-[#3aab4a]/40 hover:text-[#f5f0eb] bg-[#0f0f0f]"}`}>
+      <label className={`flex items-center gap-2 px-4 py-2.5 rounded-sm ring-1 text-xs font-medium transition-all cursor-pointer select-none w-fit ${uploading ? "opacity-50 cursor-not-allowed ring-white/5 text-[#a8a8a8]" : "ring-white/10 text-[#a8a8a8] hover:ring-[#B8B8B8]/40 hover:text-[#f5f0eb] bg-[#0f0f0f]"}`}>
         {uploading ? <Loader2 size={13} className="animate-spin" /> : <Upload size={13} />}
         {uploading ? "Enviando..." : "Escolher imagem"}
         <input
@@ -698,14 +725,14 @@ function ProdutoFormPanel({
   saving: boolean;
   title: string;
 }) {
-  const inputCls = "w-full bg-[#0f0f0f] ring-1 ring-white/10 rounded-sm px-3 py-2.5 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/30 focus:outline-none focus:ring-[#3aab4a] transition-all";
+  const inputCls = "w-full bg-[#0f0f0f] ring-1 ring-white/10 rounded-sm px-3 py-2.5 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/30 focus:outline-none focus:ring-[#B8B8B8] transition-all";
 
   return (
     <div className="bg-[#1a1a1a] rounded-sm ring-1 ring-white/8 p-5 mb-5 space-y-5">
       {/* Cabeçalho */}
       <div className="flex items-center gap-3 pb-4 border-b border-white/5">
-        <div className="w-7 h-7 rounded-sm bg-[#3aab4a]/10 flex items-center justify-center shrink-0">
-          <ShoppingBag size={13} className="text-[#3aab4a]" />
+        <div className="w-7 h-7 rounded-sm bg-[#B8B8B8]/10 flex items-center justify-center shrink-0">
+          <ShoppingBag size={13} className="text-[#B8B8B8]" />
         </div>
         <div>
           <p className="text-[#f5f0eb] text-sm font-medium">{title}</p>
@@ -824,10 +851,10 @@ function ProdutoFormPanel({
             type="checkbox"
             checked={form.destaque}
             onChange={(e) => setForm((f) => ({ ...f, destaque: e.target.checked }))}
-            className="accent-[#3aab4a] mt-0.5 shrink-0"
+            className="accent-[#B8B8B8] mt-0.5 shrink-0"
           />
           <div>
-            <p className="text-[#f5f0eb] text-xs font-medium group-hover:text-[#3aab4a] transition-colors">Produto em destaque</p>
+            <p className="text-[#f5f0eb] text-xs font-medium group-hover:text-[#B8B8B8] transition-colors">Produto em destaque</p>
             <p className="text-[#a8a8a8]/60 text-[11px] mt-0.5">Aparece com um selo verde de "Destaque" na loja</p>
           </div>
         </label>
@@ -836,10 +863,10 @@ function ProdutoFormPanel({
             type="checkbox"
             checked={form.ativo}
             onChange={(e) => setForm((f) => ({ ...f, ativo: e.target.checked }))}
-            className="accent-[#3aab4a] mt-0.5 shrink-0"
+            className="accent-[#B8B8B8] mt-0.5 shrink-0"
           />
           <div>
-            <p className="text-[#f5f0eb] text-xs font-medium group-hover:text-[#3aab4a] transition-colors">Produto ativo</p>
+            <p className="text-[#f5f0eb] text-xs font-medium group-hover:text-[#B8B8B8] transition-colors">Produto ativo</p>
             <p className="text-[#a8a8a8]/60 text-[11px] mt-0.5">Desmarque para ocultar da loja sem excluir</p>
           </div>
         </label>
@@ -928,7 +955,7 @@ function ProdutosTab({
         <div className="flex flex-wrap gap-2">
           <button
             onClick={() => setFiltroCat("todos")}
-            className={`px-3 py-1.5 text-[10px] tracking-widest uppercase font-medium rounded-sm ring-1 transition-all ${filtroCat === "todos" ? "bg-[#3aab4a] text-[#111111] ring-[#3aab4a]" : "bg-[#272727] text-[#a8a8a8] ring-white/5 hover:ring-[#3aab4a]/30"}`}
+            className={`px-3 py-1.5 text-[10px] tracking-widest uppercase font-medium rounded-sm ring-1 transition-all ${filtroCat === "todos" ? "bg-[#B8B8B8] text-[#111111] ring-[#B8B8B8]" : "bg-[#272727] text-[#a8a8a8] ring-white/5 hover:ring-[#B8B8B8]/30"}`}
           >
             Todos ({produtos.length})
           </button>
@@ -938,7 +965,7 @@ function ProdutosTab({
               <button
                 key={cat.value}
                 onClick={() => setFiltroCat(cat.value)}
-                className={`px-3 py-1.5 text-[10px] tracking-widest uppercase font-medium rounded-sm ring-1 transition-all ${filtroCat === cat.value ? "bg-[#3aab4a] text-[#111111] ring-[#3aab4a]" : "bg-[#272727] text-[#a8a8a8] ring-white/5 hover:ring-[#3aab4a]/30"}`}
+                className={`px-3 py-1.5 text-[10px] tracking-widest uppercase font-medium rounded-sm ring-1 transition-all ${filtroCat === cat.value ? "bg-[#B8B8B8] text-[#111111] ring-[#B8B8B8]" : "bg-[#272727] text-[#a8a8a8] ring-white/5 hover:ring-[#B8B8B8]/30"}`}
               >
                 {cat.label} ({cnt})
               </button>
@@ -953,7 +980,7 @@ function ProdutosTab({
             });
             setEditingId(null);
           }}
-          className="flex items-center gap-2 px-4 py-2 bg-[#3aab4a] text-[#111111] text-xs font-semibold tracking-wider uppercase rounded-sm hover:bg-[#4ec55e] transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-[#B8B8B8] text-[#111111] text-xs font-semibold tracking-wider uppercase rounded-sm hover:bg-[#D4D4D4] transition-colors"
         >
           <Plus size={13} /> Novo produto
         </button>
@@ -980,7 +1007,7 @@ function ProdutosTab({
                   <div className="relative aspect-video overflow-hidden">
                     <img src={p.imagem} alt={p.nome} className="w-full h-full object-cover" />
                     {p.destaque && (
-                      <span className="absolute top-2 left-2 bg-[#3aab4a] text-[#111111] text-[9px] font-semibold tracking-widest uppercase px-1.5 py-0.5 rounded-sm">
+                      <span className="absolute top-2 left-2 bg-[#B8B8B8] text-[#111111] text-[9px] font-semibold tracking-widest uppercase px-1.5 py-0.5 rounded-sm">
                         Destaque
                       </span>
                     )}
@@ -992,7 +1019,7 @@ function ProdutosTab({
                   </div>
                 )}
                 <div className="p-3">
-                  <p className="text-[10px] tracking-widest uppercase text-[#3aab4a] mb-0.5">
+                  <p className="text-[10px] tracking-widest uppercase text-[#B8B8B8] mb-0.5">
                     {CATEGORIAS_PRODUTO.find((c) => c.value === p.categoria)?.label}
                   </p>
                   <p className="text-[#f5f0eb] text-sm font-medium truncate">{p.nome}</p>
@@ -1000,7 +1027,7 @@ function ProdutosTab({
                     <p className="text-[#a8a8a8] text-[11px] mt-0.5 line-clamp-2">{p.descricao}</p>
                   )}
                   <div className="flex items-center justify-between mt-2">
-                    <span className="text-[#3aab4a] font-semibold text-sm">R$ {p.preco.toFixed(2).replace(".", ",")}</span>
+                    <span className="text-[#B8B8B8] font-semibold text-sm">R$ {p.preco.toFixed(2).replace(".", ",")}</span>
                     <span className="text-[#a8a8a8] text-[10px]">{p.estoque} em estoque</span>
                   </div>
                 </div>
@@ -1057,7 +1084,7 @@ function KpiCard({ label, value, sub, accent }: { label: string; value: string; 
   return (
     <div className="bg-[#1a1a1a] ring-1 ring-white/5 rounded-sm p-4">
       <p className="text-[#a8a8a8] text-[10px] uppercase tracking-widest mb-2">{label}</p>
-      <p className={`text-2xl font-semibold ${accent ? "text-[#3aab4a]" : "text-[#f5f0eb]"}`}>{value}</p>
+      <p className={`text-2xl font-semibold ${accent ? "text-[#B8B8B8]" : "text-[#f5f0eb]"}`}>{value}</p>
       {sub && <p className="text-[#a8a8a8] text-xs mt-1">{sub}</p>}
     </div>
   );
@@ -1067,7 +1094,7 @@ function MiniBar({ value, max }: { value: number; max: number }) {
   const pct = max > 0 ? Math.round((value / max) * 100) : 0;
   return (
     <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
-      <div className="h-full bg-[#3aab4a] rounded-full transition-all" style={{ width: `${pct}%` }} />
+      <div className="h-full bg-[#B8B8B8] rounded-full transition-all" style={{ width: `${pct}%` }} />
     </div>
   );
 }
@@ -1129,7 +1156,7 @@ function FinanceiroTab({ agendamentos }: { agendamentos: DBAgendamento[] }) {
             type="number" min="0" max="100"
             value={commRate}
             onChange={(e) => setCommRate(e.target.value)}
-            className="w-16 bg-[#272727] ring-1 ring-white/10 rounded-sm px-2 py-1.5 text-[#f5f0eb] text-xs text-center focus:outline-none focus:ring-[#3aab4a] transition-all"
+            className="w-16 bg-[#272727] ring-1 ring-white/10 rounded-sm px-2 py-1.5 text-[#f5f0eb] text-xs text-center focus:outline-none focus:ring-[#B8B8B8] transition-all"
           />
           <span className="text-[#a8a8a8] text-xs">%</span>
         </div>
@@ -1155,7 +1182,7 @@ function FinanceiroTab({ agendamentos }: { agendamentos: DBAgendamento[] }) {
                 <div key={u.nome} className="flex items-center gap-3">
                   <span className="text-[#f5f0eb] text-xs w-28 truncate shrink-0">{u.nome}</span>
                   <MiniBar value={u.receita} max={maxUnit} />
-                  <span className="text-[#3aab4a] text-xs whitespace-nowrap">R$ {u.receita}</span>
+                  <span className="text-[#B8B8B8] text-xs whitespace-nowrap">R$ {u.receita}</span>
                   <span className="text-[#a8a8a8] text-[10px] w-14 text-right shrink-0">{u.count} atend.</span>
                 </div>
               ))}
@@ -1175,7 +1202,7 @@ function FinanceiroTab({ agendamentos }: { agendamentos: DBAgendamento[] }) {
                   <span className="text-[#a8a8a8] text-[10px] w-4 shrink-0">{i + 1}</span>
                   <span className="text-[#f5f0eb] text-xs w-24 truncate shrink-0">{b.nome}</span>
                   <MiniBar value={b.receita} max={maxBarber} />
-                  <span className="text-[#3aab4a] text-xs whitespace-nowrap">R$ {b.receita}</span>
+                  <span className="text-[#B8B8B8] text-xs whitespace-nowrap">R$ {b.receita}</span>
                   <span className="text-[#a8a8a8] text-[10px] text-right px-2">
                     comiss. R$ {Math.round(b.receita * rate)}
                   </span>
@@ -1429,7 +1456,7 @@ function AgendaTab({
             <select
               value={selectedProfId}
               onChange={(e) => setSelectedProfId(e.target.value)}
-              className="bg-[#1a1a1a] ring-1 ring-white/10 rounded-sm px-3 py-2 text-[#f5f0eb] text-sm focus:outline-none focus:ring-[#3aab4a] transition-all"
+              className="bg-[#1a1a1a] ring-1 ring-white/10 rounded-sm px-3 py-2 text-[#f5f0eb] text-sm focus:outline-none focus:ring-[#B8B8B8] transition-all"
             >
               <option value="">Selecionar barbeiro...</option>
               {profissionais.filter((p) => p.ativo).map((p) => (
@@ -1502,20 +1529,20 @@ function AgendaTab({
                     isDiaBloq
                       ? "bg-orange-500/5 ring-orange-500/30 hover:ring-orange-500/50"
                       : isToday
-                        ? "bg-[#1a2a1a] ring-[#3aab4a]/40 hover:ring-[#3aab4a]"
+                        ? "bg-[#1a2a1a] ring-[#B8B8B8]/40 hover:ring-[#B8B8B8]"
                         : "bg-[#1a1a1a] ring-white/5 hover:ring-white/20"
                   }`}
                 >
                   <div className="flex items-baseline justify-between mb-2">
                     <span className={`text-[10px] font-medium uppercase tracking-wider ${
-                      isDiaBloq ? "text-orange-400/70" : isToday ? "text-[#3aab4a]" : isPast ? "text-[#a8a8a8]/40" : "text-[#a8a8a8]"
+                      isDiaBloq ? "text-orange-400/70" : isToday ? "text-[#B8B8B8]" : isPast ? "text-[#a8a8a8]/40" : "text-[#a8a8a8]"
                     }`}>
                       {AGENDA_WEEK_DAYS[i]}
                     </span>
                     <div className="flex items-center gap-1">
                       {isDiaBloq && <Lock size={9} className="text-orange-400/70" />}
                       <span className={`text-xl font-semibold leading-none ${
-                        isDiaBloq ? "text-orange-400/60" : isToday ? "text-[#3aab4a]" : isPast ? "text-[#f5f0eb]/25" : "text-[#f5f0eb]"
+                        isDiaBloq ? "text-orange-400/60" : isToday ? "text-[#B8B8B8]" : isPast ? "text-[#f5f0eb]/25" : "text-[#f5f0eb]"
                       }`}>
                         {date.getDate()}
                       </span>
@@ -1530,7 +1557,7 @@ function AgendaTab({
                   ) : (
                     <div className="space-y-1">
                       {dayAgs.slice(0, 2).map((ag) => (
-                        <div key={ag.id} className="text-[10px] bg-[#3aab4a]/15 text-[#4ec55e] rounded-sm px-1.5 py-0.5 truncate">
+                        <div key={ag.id} className="text-[10px] bg-[#B8B8B8]/15 text-[#D4D4D4] rounded-sm px-1.5 py-0.5 truncate">
                           {ag.horario} · {ag.cliente_nome.split(" ")[0]}
                         </div>
                       ))}
@@ -1544,7 +1571,7 @@ function AgendaTab({
                       )}
                     </div>
                   )}
-                  <div className={`mt-2 pt-2 border-t ${isDiaBloq ? "border-orange-500/20" : isToday ? "border-[#3aab4a]/20" : "border-white/5"}`}>
+                  <div className={`mt-2 pt-2 border-t ${isDiaBloq ? "border-orange-500/20" : isToday ? "border-[#B8B8B8]/20" : "border-white/5"}`}>
                     <span className="text-[10px] text-[#a8a8a8]">{dayAgs.length} agend.</span>
                     {bloqNoDia.length > 0 && !isDiaBloq && (
                       <span className="ml-2 text-[10px] text-orange-400/60">{bloqNoDia.length} bloq.</span>
@@ -1565,7 +1592,7 @@ function AgendaTab({
             <span className="text-[#f5f0eb] text-sm font-medium capitalize">
               {currentDate.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric" })}
               {fmtDate(currentDate) === today && (
-                <span className="ml-2 text-[#3aab4a] text-xs font-sans normal-case tracking-normal">(Hoje)</span>
+                <span className="ml-2 text-[#B8B8B8] text-xs font-sans normal-case tracking-normal">(Hoje)</span>
               )}
             </span>
             <button onClick={nextDay} className="p-2 text-[#a8a8a8] hover:text-[#f5f0eb] hover:bg-white/5 rounded-sm transition-all">
@@ -1590,7 +1617,7 @@ function AgendaTab({
                   placeholder="Motivo do bloqueio (opcional)"
                   value={motivoBloqueio}
                   onChange={(e) => setMotivoBloqueio(e.target.value)}
-                  className="flex-1 bg-[#272727] ring-1 ring-white/10 rounded-sm px-3 py-2 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#3aab4a] max-w-xs"
+                  className="flex-1 bg-[#272727] ring-1 ring-white/10 rounded-sm px-3 py-2 text-[#f5f0eb] text-sm placeholder:text-[#a8a8a8]/40 focus:outline-none focus:ring-[#B8B8B8] max-w-xs"
                 />
               )}
               {diaBloqueado ? (
@@ -1623,7 +1650,7 @@ function AgendaTab({
                   key={h}
                   className={`flex gap-3 items-center px-4 py-3 rounded-sm ring-1 transition-all ${
                     ag
-                      ? "bg-[#1a2a1a] ring-[#3aab4a]/25"
+                      ? "bg-[#1a2a1a] ring-[#B8B8B8]/25"
                       : isBloqueado
                         ? "bg-orange-500/5 ring-orange-500/20"
                         : "bg-[#1a1a1a] ring-white/5"
@@ -1635,13 +1662,13 @@ function AgendaTab({
                     <div className="flex-1 flex flex-wrap items-center gap-3">
                       <span className="text-[#f5f0eb] text-sm font-medium">{ag.cliente_nome}</span>
                       <span className="text-[#a8a8a8] text-xs">{ag.cliente_telefone}</span>
-                      <span className="text-[10px] bg-[#3aab4a]/15 text-[#4ec55e] px-2 py-0.5 rounded-sm">
+                      <span className="text-[10px] bg-[#B8B8B8]/15 text-[#D4D4D4] px-2 py-0.5 rounded-sm">
                         {ag.servico_nome}
                       </span>
                       {ag.servico_preco !== null && (
                         <span className="text-[#a8a8a8] text-xs">R$ {ag.servico_preco}</span>
                       )}
-                      <span className={`ml-auto text-[10px] px-2 py-0.5 rounded-sm ${ag.status === "confirmado" ? "bg-[#3aab4a]/15 text-[#4ec55e]" : "bg-yellow-400/10 text-yellow-400"}`}>
+                      <span className={`ml-auto text-[10px] px-2 py-0.5 rounded-sm ${ag.status === "confirmado" ? "bg-[#B8B8B8]/15 text-[#D4D4D4]" : "bg-yellow-400/10 text-yellow-400"}`}>
                         {ag.status}
                       </span>
                     </div>
@@ -1708,16 +1735,25 @@ export default function AdminPage() {
   const [produtos, setProdutos] = useState<DBProduto[]>([]);
 
   const loadData = useCallback(async () => {
-    const [{ data: ags }, { data: profs }, { data: units }, { data: prods }] = await Promise.all([
-      supabase.from("agendamentos").select("*").order("data", { ascending: false }).limit(300),
-      supabase.from("profissionais").select("*").order("nome"),
-      supabase.from("unidades").select("*").order("nome"),
-      supabase.from("produtos").select("*").order("nome"),
-    ]);
-    setAgendamentos(ags ?? []);
-    setProfissionais(profs ?? []);
-    setUnidades(units ?? []);
-    setProdutos(prods ?? []);
+    try {
+      const [
+        { data: agendamentos },
+        { data: profissionais },
+        { data: unidades },
+        { data: produtos },
+      ] = await Promise.all([
+        supabase.from("agendamentos").select("*").order("data", { ascending: false }).limit(300),
+        supabase.from("profissionais").select("*").order("nome"),
+        supabase.from("unidades").select("*").order("nome"),
+        supabase.from("produtos").select("*").order("nome"),
+      ]);
+      setAgendamentos(agendamentos ?? []);
+      setProfissionais(profissionais ?? []);
+      setUnidades(unidades ?? []);
+      setProdutos(produtos ?? []);
+    } catch (err) {
+      console.error("Error loading admin data:", err);
+    }
   }, []);
 
   useEffect(() => {
@@ -1725,12 +1761,16 @@ export default function AdminPage() {
       if (!user) { router.replace("/cliente/login"); return; }
       setUser(user);
 
-      const [{ data: adminRow }, { data: profRow }] = await Promise.all([
-        supabase.from("admins").select("id").eq("id", user.id).maybeSingle(),
-        supabase.from("profissionais").select("*").eq("user_id", user.id).maybeSingle(),
-      ]);
+      const { data: adminData } = await supabase
+        .from("admins")
+        .select("id")
+        .eq("id", user.id)
+        .maybeSingle();
 
-      if (adminRow) {
+      const { data: profRow } = await supabase
+        .from("profissionais").select("*").eq("user_id", user.id).maybeSingle();
+
+      if (adminData) {
         setIsAdmin(true);
         await loadData();
       } else if (profRow) {
@@ -1752,7 +1792,7 @@ export default function AdminPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#111111] flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-[#3aab4a] animate-spin" />
+        <Loader2 className="w-8 h-8 text-[#B8B8B8] animate-spin" />
       </div>
     );
   }
@@ -1838,7 +1878,7 @@ export default function AdminPage() {
             <button
               key={id}
               onClick={() => setTab(id)}
-              className={`flex items-center gap-2 px-5 py-2 text-xs font-medium tracking-wider uppercase rounded-sm transition-all ${tab === id ? "bg-[#3aab4a] text-[#111111]" : "text-[#a8a8a8] hover:text-[#f5f0eb]"
+              className={`flex items-center gap-2 px-5 py-2 text-xs font-medium tracking-wider uppercase rounded-sm transition-all ${tab === id ? "bg-[#B8B8B8] text-[#111111]" : "text-[#a8a8a8] hover:text-[#f5f0eb]"
                 }`}
             >
               <Icon size={13} />

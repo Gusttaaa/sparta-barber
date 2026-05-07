@@ -38,7 +38,7 @@ const planos = [
     ],
     nao: [],
     destaque: true,
-    cor: "#3aab4a",
+    cor: "#B8B8B8",
   },
   {
     id: "premium",
@@ -99,26 +99,26 @@ export default function ClubePage() {
       {/* Hero */}
       <div className="relative pt-32 pb-20 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#3aab4a]/30 to-transparent" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-[#3aab4a]/6 blur-[120px] rounded-full" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#B8B8B8]/30 to-transparent" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-[#B8B8B8]/6 blur-[120px] rounded-full" />
         </div>
         <div className="max-w-3xl mx-auto px-6 text-center relative z-10">
           <div className="inline-flex items-center gap-2 mb-6">
-            <div className="w-6 h-px bg-[#3aab4a]" />
-            <span className="text-xs font-medium tracking-[0.25em] uppercase text-[#3aab4a]">
+            <div className="w-6 h-px bg-[#B8B8B8]" />
+            <span className="text-xs font-medium tracking-[0.25em] uppercase text-[#B8B8B8]">
               Exclusividade
             </span>
-            <div className="w-6 h-px bg-[#3aab4a]" />
+            <div className="w-6 h-px bg-[#B8B8B8]" />
           </div>
           <h1 className="font-display text-[clamp(48px,7vw,96px)] text-[#f5f0eb] leading-[0.9] tracking-tight">
             CLUBE DE
           </h1>
-          <h1 className="font-display text-[clamp(48px,7vw,96px)] text-[#3aab4a] leading-[0.9] tracking-tight mb-6">
+          <h1 className="font-display text-[clamp(48px,7vw,96px)] text-[#B8B8B8] leading-[0.9] tracking-tight mb-6">
             ASSINATURAS
           </h1>
           <p className="text-[#a8a8a8] max-w-lg mx-auto leading-relaxed">
             Trate-se como merece. Planos mensais com acesso prioritário,
-            descontos exclusivos e a qualidade Barbearia de Primeira — todo mês.
+            descontos exclusivos e a qualidade Sparta Barber — todo mês.
           </p>
         </div>
       </div>
@@ -136,18 +136,18 @@ export default function ClubePage() {
                 transition={{ duration: 0.5, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
                 className={`relative rounded-sm p-8 flex flex-col ring-1 ${
                   plano.destaque
-                    ? "bg-[#3aab4a] ring-[#3aab4a] shadow-[0_0_60px_rgba(58,171,74,0.25)] md:scale-[1.04]"
+                    ? "bg-[#B8B8B8] ring-[#B8B8B8] shadow-[0_0_60px_rgba(184,184,184,0.25)] md:scale-[1.04]"
                     : "bg-[#272727] ring-white/5"
                 }`}
               >
                 {plano.destaque && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#111111] text-[#3aab4a] text-[10px] font-semibold tracking-widest uppercase px-4 py-1 rounded-full border border-[#3aab4a]/30 whitespace-nowrap">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#111111] text-[#B8B8B8] text-[10px] font-semibold tracking-widest uppercase px-4 py-1 rounded-full border border-[#B8B8B8]/30 whitespace-nowrap">
                     Mais popular
                   </div>
                 )}
 
-                <div className={`w-10 h-10 rounded-sm flex items-center justify-center mb-4 ${plano.destaque ? "bg-[#111111]/20" : "bg-[#3aab4a]/10"}`}>
-                  <Icon size={18} className={plano.destaque ? "text-[#111111]" : "text-[#3aab4a]"} />
+                <div className={`w-10 h-10 rounded-sm flex items-center justify-center mb-4 ${plano.destaque ? "bg-[#111111]/20" : "bg-[#B8B8B8]/10"}`}>
+                  <Icon size={18} className={plano.destaque ? "text-[#111111]" : "text-[#B8B8B8]"} />
                 </div>
 
                 <h3 className={`font-display text-3xl tracking-wide mb-1 ${plano.destaque ? "text-[#111111]" : "text-[#f5f0eb]"}`}>
@@ -167,7 +167,7 @@ export default function ClubePage() {
                 <ul className="space-y-2.5 flex-1 mb-6">
                   {plano.beneficios.map((b) => (
                     <li key={b} className="flex items-center gap-2.5 text-sm">
-                      <Check size={13} className={plano.destaque ? "text-[#111111]" : "text-[#3aab4a]"} />
+                      <Check size={13} className={plano.destaque ? "text-[#111111]" : "text-[#B8B8B8]"} />
                       <span className={plano.destaque ? "text-[#111111]/80" : "text-[#a8a8a8]"}>{b}</span>
                     </li>
                   ))}
@@ -177,8 +177,8 @@ export default function ClubePage() {
                   onClick={() => handleAssinar(plano.nome)}
                   className={`w-full py-3 rounded-sm font-semibold tracking-widest uppercase text-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 active:scale-[0.98] ${
                     plano.destaque
-                      ? "bg-[#111111] text-[#3aab4a] hover:bg-[#1a1a1a] focus-visible:ring-[#111111]"
-                      : "bg-[#3aab4a] text-[#111111] hover:bg-[#4ec55e] focus-visible:ring-[#3aab4a] shadow-[0_0_20px_rgba(58,171,74,0.2)]"
+                      ? "bg-[#111111] text-[#B8B8B8] hover:bg-[#1a1a1a] focus-visible:ring-[#111111]"
+                      : "bg-[#B8B8B8] text-[#111111] hover:bg-[#D4D4D4] focus-visible:ring-[#B8B8B8] shadow-[0_0_20px_rgba(184,184,184,0.2)]"
                   }`}
                 >
                   Assinar {plano.nome}
@@ -192,11 +192,11 @@ export default function ClubePage() {
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 mb-4">
-              <div className="w-6 h-px bg-[#3aab4a]" />
-              <span className="text-xs font-medium tracking-[0.25em] uppercase text-[#3aab4a]">
+              <div className="w-6 h-px bg-[#B8B8B8]" />
+              <span className="text-xs font-medium tracking-[0.25em] uppercase text-[#B8B8B8]">
                 Dúvidas frequentes
               </span>
-              <div className="w-6 h-px bg-[#3aab4a]" />
+              <div className="w-6 h-px bg-[#B8B8B8]" />
             </div>
             <h2 className="font-display text-4xl text-[#f5f0eb] tracking-tight">FAQ</h2>
           </div>
@@ -206,7 +206,7 @@ export default function ClubePage() {
               <div key={i} className="bg-[#272727] rounded-sm ring-1 ring-white/5 overflow-hidden">
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between p-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3aab4a] focus-visible:ring-inset"
+                  className="w-full flex items-center justify-between p-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B8B8B8] focus-visible:ring-inset"
                 >
                   <span className="font-medium text-[#f5f0eb] pr-4">{faq.q}</span>
                   <ChevronDown

@@ -40,27 +40,14 @@ export default function Hero() {
       />
 
       {/* Background logo watermark */}
-      <div className="absolute -bottom-32 -right-32 w-96 h-96 pointer-events-none opacity-[0.08]">
-        <svg viewBox="0 0 200 200" className="w-full h-full text-[#B8B8B8]" fill="currentColor">
-          <circle cx="100" cy="100" r="95" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.3"/>
-          <g transform="translate(100, 85)">
-            <path d="M -20 -35 L -15 -42 L 0 -45 L 15 -42 L 20 -35" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M -22 -30 Q -28 -15 -28 0 L -25 8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M 22 -30 Q 28 -15 28 0 L 25 8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <line x1="0" y1="-45" x2="0" y2="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M -4 -8 L 0 2 L 4 -8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <circle cx="-8" cy="-5" r="3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <circle cx="8" cy="-5" r="3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M -25 -5 Q -22 5 -18 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M 25 -5 Q 22 5 18 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M -20 10 Q -15 12 0 13 Q 15 12 20 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </g>
-          <g transform="translate(100, 130)">
-            <path d="M -18 0 L -18 18 Q 0 28 18 18 L 18 0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <line x1="-8" y1="6" x2="8" y2="6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            <line x1="0" y1="0" x2="0" y2="18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </g>
-        </svg>
+      <div className="absolute -bottom-32 -right-32 w-96 h-96 pointer-events-none opacity-[0.06]">
+        <Image
+          src="/spartabarberlogo.jpg"
+          alt="Sparta Barber"
+          width={384}
+          height={384}
+          className="w-full h-full object-contain"
+        />
       </div>
 
       {/* Content */}

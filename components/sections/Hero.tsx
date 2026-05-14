@@ -120,19 +120,19 @@ export default function Hero() {
             </motion.div>
           </div>
 
-          {/* Right: Image + stats */}
+          {/* Right: Video + stats */}
           <motion.div
             {...fadeIn(0.5)}
             className="relative hidden lg:flex flex-col gap-6 items-end"
           >
-            {/* Main image */}
+            {/* Main video */}
             <div className="relative w-full max-w-md aspect-[3/4] rounded-sm overflow-hidden ring-1 ring-white/10">
-              <Image
-                src="https://placehold.co/480x640/1e1e1e/272727?text=.&format=png"
-                alt="Sparta Barber"
-                width={480}
-                height={640}
-                loading="lazy"
+              <video
+                src="/videobanner.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
                 className="w-full h-full object-cover"
               />
               {/* Color treatment overlay */}
